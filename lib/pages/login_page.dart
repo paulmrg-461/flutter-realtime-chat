@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:realtime_chat/widgets/custom_input.dart';
+import 'package:realtime_chat/widgets/labels.dart';
+import 'package:realtime_chat/widgets/logo.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -10,9 +12,9 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _Logo(),
+              Logo(),
               _Form(),
-              _Labels(),
+              Labels(),
               Text(
                 'Terms and conditions',
                 style: TextStyle(
@@ -24,75 +26,46 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class _Logo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final screensize = MediaQuery.of(context).size;
-    return Center(
-        child: Container(
-            margin: EdgeInsets.only(top: 48),
-            width: screensize.width * 0.65,
-            padding: EdgeInsets.all(32),
-            child: Column(
-              children: [
-                Image(image: AssetImage('assets/tag-logo.png')),
-                SizedBox(
-                  height: 18,
-                ),
-                Text(
-                  'Messenger!',
-                  style: TextStyle(fontSize: 26),
-                )
-              ],
-            )));
-  }
-}
-
 class _Form extends StatefulWidget {
   @override
   __FormState createState() => __FormState();
 }
 
 class __FormState extends State<_Form> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 40),
+      //margin: EdgeInsets.only(top: 40),
       padding: EdgeInsets.symmetric(horizontal: 46),
       child: Column(
         children: [
-          CustomInput(),
-          CustomInput(),
+          CustomInput(
+            textController: emailController,
+            hintText: 'Email',
+            icon: Icons.mail_outline,
+            textInputType: TextInputType.emailAddress,
+          ),
+          CustomInput(
+            textController: passwordController,
+            hintText: 'Password',
+            icon: Icons.lock_outline,
+            textInputType: TextInputType.text,
+            obscureText: true,
+          ),
           //TODO: Create Button
-        ],
-      ),
-    );
-  }
-}
-
-class _Labels extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            'Don\'t you have account?',
-            style: TextStyle(
-                color: Colors.black54,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w300),
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          Text(
-            'Sign up!',
-            style: TextStyle(
-                color: Colors.blue[600],
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold),
-          ),
+          RaisedButton(
+              child: Text(
+                'Login',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700),
+              ),
+              color: Colors.blue,
+              onPressed: () => print(emailController.text))
         ],
       ),
     );

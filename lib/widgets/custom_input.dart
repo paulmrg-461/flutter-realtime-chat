@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 
 class CustomInput extends StatelessWidget {
+  final String hintText;
+  final TextEditingController textController;
+  final IconData icon;
+  final IconData suffixIcon;
+  final TextInputType textInputType;
+  final bool obscureText;
+
+  CustomInput({
+    Key key,
+    @required this.hintText,
+    @required this.textController,
+    @required this.icon,
+    this.textInputType = TextInputType.text,
+    this.obscureText = false,
+    this.suffixIcon,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(bottom: 18),
-        padding: EdgeInsets.only(top: 6, bottom: 2, left: 6, right: 18),
+        padding: EdgeInsets.only(top: 6, left: 6, right: 18),
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30.0),
@@ -16,14 +33,16 @@ class CustomInput extends StatelessWidget {
                   blurRadius: 5)
             ]),
         child: TextField(
+          controller: this.textController,
           autocorrect: false,
-          keyboardType: TextInputType.emailAddress,
-          //obscureText: true,
+          keyboardType: this.textInputType,
+          obscureText: this.obscureText,
           decoration: InputDecoration(
-              prefixIcon: Icon(Icons.mail_outline),
+              prefixIcon: Icon(this.icon),
+              suffixIcon: Icon(this.suffixIcon),
               focusedBorder: InputBorder.none,
               border: InputBorder.none,
-              hintText: 'Email'),
+              hintText: this.hintText),
         ));
   }
 }

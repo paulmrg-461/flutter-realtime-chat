@@ -10,18 +10,24 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
         backgroundColor: Color(0xffF2F2F2),
         body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Logo(),
-              _Form(),
-              Labels(),
-              Text(
-                'Terms and conditions',
-                style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.w200),
-              )
-            ],
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.95,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Logo(),
+                  _Form(),
+                  Labels(),
+                  Text(
+                    'Terms and conditions',
+                    style: TextStyle(
+                        color: Colors.black54, fontWeight: FontWeight.w200),
+                  )
+                ],
+              ),
+            ),
           ),
         ));
   }

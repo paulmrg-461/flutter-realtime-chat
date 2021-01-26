@@ -7,16 +7,18 @@ class CustomInput extends StatelessWidget {
   final IconData suffixIcon;
   final TextInputType textInputType;
   final bool obscureText;
+  final TextCapitalization textCapitalization;
 
-  CustomInput({
-    Key key,
-    @required this.hintText,
-    @required this.textController,
-    @required this.icon,
-    this.textInputType = TextInputType.text,
-    this.obscureText = false,
-    this.suffixIcon,
-  }) : super(key: key);
+  CustomInput(
+      {Key key,
+      @required this.hintText,
+      @required this.textController,
+      @required this.icon,
+      this.suffixIcon,
+      this.textInputType = TextInputType.text,
+      this.obscureText = false,
+      this.textCapitalization = TextCapitalization.none})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class CustomInput extends StatelessWidget {
           autocorrect: false,
           keyboardType: this.textInputType,
           obscureText: this.obscureText,
+          textCapitalization: this.textCapitalization,
           decoration: InputDecoration(
               prefixIcon: Icon(this.icon),
               suffixIcon: Icon(this.suffixIcon),

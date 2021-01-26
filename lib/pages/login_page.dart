@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:realtime_chat/widgets/custom_button.dart';
 import 'package:realtime_chat/widgets/custom_input.dart';
 import 'package:realtime_chat/widgets/labels.dart';
 import 'package:realtime_chat/widgets/logo.dart';
@@ -55,17 +56,13 @@ class __FormState extends State<_Form> {
             textInputType: TextInputType.text,
             obscureText: true,
           ),
-          //TODO: Create Button
-          RaisedButton(
-              child: Text(
-                'Login',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700),
-              ),
-              color: Colors.blue,
-              onPressed: () => print(emailController.text))
+          CustomButton(
+            onPressed: () => print(emailController.text),
+            textButton: 'Login',
+            buttonColor: Colors.blue,
+            textColor: Colors.white,
+            fontSize: 18.0,
+          )
         ],
       ),
     );

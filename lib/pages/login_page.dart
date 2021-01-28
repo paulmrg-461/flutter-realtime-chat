@@ -69,7 +69,7 @@ class __FormState extends State<_Form> {
             obscureText: true,
           ),
           CustomButton(
-            onPressed: () => print(emailController.text),
+            onPressed: () => Navigator.pushReplacementNamed(context, 'users'),
             textButton: 'Login',
             buttonColor: Colors.blue,
             textColor: Colors.white,

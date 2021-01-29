@@ -90,7 +90,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
           //Send button
           Container(
               margin: EdgeInsets.symmetric(horizontal: 4.0),
-              child: !Platform.isIOS
+              child: Platform.isIOS
                   ? CupertinoButton(
                       child: Text('Enviar'),
                       onPressed: _isWriting
@@ -133,5 +133,14 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     setState(() {
       _isWriting = false;
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: Socket OFF
+    for (ChatMessage message in _messages) {
+      message.animationController.dispose();
+    }
+    super.dispose();
   }
 }

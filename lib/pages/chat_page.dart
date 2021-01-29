@@ -1,6 +1,17 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  final _textController = new TextEditingController();
+  final _focusNode = new FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +31,7 @@ class ChatPage extends StatelessWidget {
             //TODO: TextBox
             Container(
               color: Colors.white,
-              height: 50.0,
+              child: _inputChat(),
             )
           ],
         ),
@@ -50,5 +61,45 @@ class ChatPage extends StatelessWidget {
             ),
           ],
         ));
+  }
+
+  Widget _inputChat() {
+    return SafeArea(
+        child: Container(
+      margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+      child: Row(
+        children: [
+          Flexible(
+              child: TextField(
+            controller: _textController,
+            onSubmitted: _handleSubmit,
+            onChanged: (String text) {
+              //TODO: cuando hay un valor, para poder postear
+            },
+            decoration: InputDecoration.collapsed(hintText: 'Send message!'),
+            focusNode: _focusNode,
+          )),
+
+          //Send button
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              child: Platform.isIOS
+                  ? CupertinoButton(child: Text('Enviar'), onPressed: () {})
+                  : Container(
+                      //margin: EdgeInsets.symmetric(horizontal: 4.0),
+                      child: IconButton(
+                          icon: Icon(Icons.send),
+                          color: Colors.blue[400],
+                          onPressed: () {}),
+                    ))
+        ],
+      ),
+    ));
+  }
+
+  _handleSubmit(String text) {
+    print(text);
+    _textController.clear();
+    _focusNode.requestFocus();
   }
 }

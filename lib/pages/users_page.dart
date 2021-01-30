@@ -23,10 +23,12 @@ class _UsersPageState extends State<UsersPage> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final user = authService.user;
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'My Name',
+            user.name,
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.black87),
           ),
@@ -37,8 +39,9 @@ class _UsersPageState extends State<UsersPage> {
                 color: Colors.black87,
               ),
               onPressed: () {
-                authService.logout();
+                //TODO: Disconnect socket server
                 Navigator.pushReplacementNamed(context, 'login');
+                AuthService.deleteToken();
               }),
           actions: <Widget>[
             Container(

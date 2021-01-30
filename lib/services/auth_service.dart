@@ -39,7 +39,6 @@ class AuthService with ChangeNotifier {
     final resp = await http.post('${Enviroment.apiUrl}/login',
         body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
 
-    print(resp.body);
     this.authenticating = false;
 
     if (resp.statusCode == 200) {
@@ -63,7 +62,6 @@ class AuthService with ChangeNotifier {
     final resp = await http.post('${Enviroment.apiUrl}/login/new',
         body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
 
-    print(resp.body);
     this.authenticating = false;
 
     if (resp.statusCode == 200) {

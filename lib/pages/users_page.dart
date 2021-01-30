@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:realtime_chat/models/user.dart';
+import 'package:realtime_chat/services/auth_service.dart';
 
 class UsersPage extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class _UsersPageState extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -33,7 +36,10 @@ class _UsersPageState extends State<UsersPage> {
                 Icons.exit_to_app,
                 color: Colors.black87,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                authService.logout();
+                Navigator.pushReplacementNamed(context, 'login');
+              }),
           actions: <Widget>[
             Container(
               margin: EdgeInsets.only(right: 16),

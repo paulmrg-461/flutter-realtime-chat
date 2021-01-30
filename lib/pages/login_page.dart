@@ -53,6 +53,7 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return Container(
       //margin: EdgeInsets.only(top: 40),
       padding: EdgeInsets.symmetric(horizontal: 46),
@@ -72,11 +73,13 @@ class __FormState extends State<_Form> {
             obscureText: true,
           ),
           CustomButton(
-            onPressed: () {
-              final authService =
-                  Provider.of<AuthService>(context, listen: false)
-                      .login(emailController.text, passwordController.text);
-            },
+            onPressed: authService.authenticating
+                ? null
+                : () {
+                    FocusScope.of(context).unfocus();
+                    authService.login(emailController.text.trim(),
+                        passwordController.text.trim());
+                  },
             textButton: 'Login',
             buttonColor: Colors.blue,
             textColor: Colors.white,

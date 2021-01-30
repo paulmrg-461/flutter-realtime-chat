@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:realtime_chat/services/auth_service.dart';
+
 import 'package:realtime_chat/widgets/custom_button.dart';
 import 'package:realtime_chat/widgets/custom_input.dart';
 import 'package:realtime_chat/widgets/labels.dart';
@@ -69,7 +72,11 @@ class __FormState extends State<_Form> {
             obscureText: true,
           ),
           CustomButton(
-            onPressed: () => Navigator.pushReplacementNamed(context, 'users'),
+            onPressed: () {
+              final authService =
+                  Provider.of<AuthService>(context, listen: false)
+                      .login(emailController.text, passwordController.text);
+            },
             textButton: 'Login',
             buttonColor: Colors.blue,
             textColor: Colors.white,

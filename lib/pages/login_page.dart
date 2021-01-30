@@ -83,7 +83,8 @@ class __FormState extends State<_Form> {
                         passwordController.text.trim());
 
                     if (loginOk) {
-                      //TODO: Navigate to new screen
+                      //TODO: Connect to socketServer
+                      Navigator.pushReplacementNamed(context, 'users');
                     } else {
                       showAlert(context, 'Bad login',
                           'Please check your credentials');

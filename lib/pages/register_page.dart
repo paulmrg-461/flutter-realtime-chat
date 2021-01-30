@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:realtime_chat/helpers/show_alert.dart';
+import 'package:realtime_chat/services/auth_service.dart';
 import 'package:realtime_chat/widgets/custom_button.dart';
 import 'package:realtime_chat/widgets/custom_input.dart';
 import 'package:realtime_chat/widgets/labels.dart';
@@ -51,6 +54,7 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     return Container(
       //margin: EdgeInsets.only(top: 40),
       padding: EdgeInsets.symmetric(horizontal: 46),
@@ -77,8 +81,22 @@ class __FormState extends State<_Form> {
             obscureText: true,
           ),
           CustomButton(
-            onPressed: () => print(emailController.text),
-            textButton: 'Register',
+            onPressed: authService.authenticating
+                ? null
+                : () async {
+                    FocusScope.of(context).unfocus();
+                    final signupOk = await authService.signUp(
+                        nameController.text.trim(),
+                        emailController.text.trim(),
+                        passwordController.text.trim());
+
+                    if (signupOk == true) {
+                      Navigator.pushReplacementNamed(context, 'users');
+                    } else {
+                      showAlert(context, 'Bad sign up', signupOk.toString());
+                    }
+                  },
+            textButton: 'Sign up',
             buttonColor: Colors.blue,
             textColor: Colors.white,
             fontSize: 18.0,

@@ -55,6 +55,32 @@ class AuthService with ChangeNotifier {
     }
   }
 
+  Future signUp(String name, String email, String password) async {
+    this.authenticating = true;
+
+    final data = {'name': name, 'email': email, 'password': password};
+
+    final resp = await http.post('${Enviroment.apiUrl}/login/new',
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
+    print(resp.body);
+    this.authenticating = false;
+
+    if (resp.statusCode == 200) {
+      final loginResponse = loginResponseFromJson(resp.body);
+      this.user = loginResponse.user;
+
+      //Save token in KeyChain - KeyStore
+      await this._saveToken(loginResponse.token);
+
+      return true;
+    } else {
+      final respBody = jsonDecode(resp.body);
+      print(respBody);
+      return respBody['msg'];
+    }
+  }
+
   Future _saveToken(String token) async {
     return await _storage.write(key: 'token', value: token);
   }

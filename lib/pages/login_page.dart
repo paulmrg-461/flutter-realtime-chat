@@ -6,6 +6,7 @@ import 'package:realtime_chat/widgets/custom_button.dart';
 import 'package:realtime_chat/widgets/custom_input.dart';
 import 'package:realtime_chat/widgets/labels.dart';
 import 'package:realtime_chat/widgets/logo.dart';
+import 'package:realtime_chat/helpers/show_alert.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -75,10 +76,18 @@ class __FormState extends State<_Form> {
           CustomButton(
             onPressed: authService.authenticating
                 ? null
-                : () {
+                : () async {
                     FocusScope.of(context).unfocus();
-                    authService.login(emailController.text.trim(),
+                    final loginOk = await authService.login(
+                        emailController.text.trim(),
                         passwordController.text.trim());
+
+                    if (loginOk) {
+                      //TODO: Navigate to new screen
+                    } else {
+                      showAlert(context, 'Bad login',
+                          'Please check your credentials');
+                    }
                   },
             textButton: 'Login',
             buttonColor: Colors.blue,

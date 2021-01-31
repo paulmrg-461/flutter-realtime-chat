@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:realtime_chat/models/user.dart';
+import 'package:realtime_chat/services/chat_service.dart';
 import 'package:realtime_chat/widgets/chat_message.dart';
 
 class ChatPage extends StatefulWidget {
@@ -18,8 +21,9 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final chatService = Provider.of<ChatService>(context);
     return Scaffold(
-      appBar: _myAppBar(),
+      appBar: _myAppBar(chatService.userTo),
       body: Container(
         child: Column(
           children: [
@@ -33,7 +37,6 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
             Divider(
               height: 1,
             ),
-            //TODO: TextBox
             Container(
               color: Colors.white,
               child: _inputChat(),
@@ -44,28 +47,30 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     );
   }
 
-  AppBar _myAppBar() {
+  AppBar _myAppBar(User user) {
     return AppBar(
-        backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-                maxRadius: 16,
-                backgroundColor: Colors.blue[100],
-                child: Text(
-                  'Na',
-                  style: TextStyle(fontSize: 12.0),
-                )),
-            SizedBox(
-              width: 12.0,
-            ),
-            Text(
-              'Natalia Flores',
-              style: TextStyle(color: Colors.black87, fontSize: 14.0),
-            ),
-          ],
-        ));
+      backgroundColor: Colors.blue,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+              maxRadius: 18,
+              backgroundColor: Colors.blue[100],
+              child: Text(
+                user.name.substring(0, 2),
+                style: TextStyle(fontSize: 16.0),
+              )),
+          SizedBox(
+            width: 12,
+          ),
+          Text(
+            user.name,
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+          ),
+        ],
+      ),
+      actions: [IconButton(icon: Icon(Icons.call), onPressed: () {})],
+    );
   }
 
   Widget _inputChat() {

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:realtime_chat/services/auth_service.dart';
+import 'package:realtime_chat/services/chat_service.dart';
 import 'package:realtime_chat/services/socket_service.dart';
 import 'package:realtime_chat/models/user.dart';
 import 'package:realtime_chat/services/users_service.dart';
@@ -104,6 +105,11 @@ class _UsersPageState extends State<UsersPage> {
                 user.online ? Colors.green[300] : Colors.red.withOpacity(0.7),
             shape: BoxShape.circle),
       ),
+      onTap: () {
+        final chatService = Provider.of<ChatService>(context, listen: false);
+        chatService.userTo = user;
+        Navigator.pushNamed(context, 'chat');
+      },
     );
   }
 

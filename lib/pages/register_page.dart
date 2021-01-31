@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:realtime_chat/helpers/show_alert.dart';
 import 'package:realtime_chat/services/auth_service.dart';
+import 'package:realtime_chat/services/socket_service.dart';
 import 'package:realtime_chat/widgets/custom_button.dart';
 import 'package:realtime_chat/widgets/custom_input.dart';
 import 'package:realtime_chat/widgets/labels.dart';
@@ -55,6 +56,7 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
     return Container(
       //margin: EdgeInsets.only(top: 40),
       padding: EdgeInsets.symmetric(horizontal: 46),
@@ -91,6 +93,7 @@ class __FormState extends State<_Form> {
                         passwordController.text.trim());
 
                     if (signupOk == true) {
+                      socketService.connect();
                       Navigator.pushReplacementNamed(context, 'users');
                     } else {
                       showAlert(context, 'Bad sign up', signupOk.toString());
